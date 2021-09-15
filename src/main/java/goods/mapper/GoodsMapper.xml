@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods.mapper.GoodsMapper">
+
+	<select id="IfNameExist" parameterType="String"
+		resultType="Integer">
+		select count(*) from goods where coursename= #{coursename}
+	</select>
+	
+	<select id="findgoodsNum" resultType="Integer">
+		select count(*) from goods where coursename is not null
+	</select>
+	
+	<select id="findAllFenlei" parameterType="String" resultType="Goods">
+		select distinct fenlei from goods group by fenlei;
+	</select>
+	
+	<select id="findHot" resultType="Goods">
+		select * from goods where temp5 =#{temp2} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findNew" resultType="Goods">
+		select * from goods where createtime like '%0%' order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+
+	<!-- 查询所有person -->
+	<select id="queryAll" resultType="Goods">
+		select * from goods where createtime like '%0%' order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+
+	<select id="findByFenlei" resultType="Goods">
+		select * from goods where fenlei= #{fenlei} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+
+	<select id="findGoodsById" resultType="Goods">
+		select * from goods where id = #{id}
+	</select>
+
+	<select id="findByname" parameterType="String" resultType="Goods">
+		select * from goods where coursename= #{coursename}
+	</select>
+	
+	<select id="findLikename" resultType="Goods">
+		select * from goods where coursename like '%${coursename}%' limit #{startpage},#{count}
+	</select>
+	
+	<select id="findLikeType" parameterType="String" resultType="Goods">
+		select * from goods where fenlei like '%${fenlei}%'
+	</select>
+	
+	<select id="findLikeNameAndType" parameterType="String" resultType="Goods">
+		select * from goods where coursename like '%${coursename}%' and fenlei like '%${fenlei}%'
+	</select>
+
+	<delete id="deleteByname" >
+		delete from goods where coursename= #{coursename}
+	</delete>
+
+	<delete id="deleteByGoodsId" >
+		delete from goods where id = #{id}
+	</delete>
+
+	<insert id="AddGoods">
+		insert into
+		goods(id,coursename,singleprice,youhui,fenlei,img,kucunliang,jinjia,jianjie,temp1,temp2,temp3,temp4,temp5,createtime)
+		values(${id},#{coursename},#{singleprice},#{youhui},#{fenlei},#{img},#{kucunliang},#{jinjia},#{jianjie},#{temp1},#{temp2},#{temp3},#{temp4},#{temp5},#{createtime})
+	</insert>
+
+	<update id="updategoodsById">
+		update goods set coursename=#{coursename},singleprice=#{singleprice},youhui=#{youhui},fenlei=#{fenlei},img=#{img},kucunliang=#{kucunliang},jinjia=#{jinjia},jianjie=#{jianjie},temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},updatetime=#{updatetime}
+		where id = #{id}
+	</update>
+
+	<update id="updateGoodsByname">
+		update goods set singleprice=#{singleprice},youhui=#{youhui},fenlei=#{fenlei},img=#{img},kucunliang=#{kucunliang},jinjia=#{jinjia},jianjie=#{jianjie},temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},updatetime=#{updatetime}
+		where coursename=#{coursename}
+	</update>
+
+
+</mapper>

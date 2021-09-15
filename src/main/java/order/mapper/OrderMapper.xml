@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order.mapper.OrderMapper">
+
+	<select id="queryAll" resultType="Order">
+		select * from dingdan order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findxiaoshoue" resultType="Xioashoue">
+		select goods.fenlei,sum(dingdan.singleprice*dingdan.goodsnum) as liushui,sum(dingdan.goodsnum*goods.jinjia) as lirun from goods,dingdan where goods.id=dingdan.temp5 and status='8' group by goods.fenlei
+	</select>
+	
+	<select id="findStatusOrder" resultType="Order">
+		select * from dingdan where status = #{status}
+	</select>
+
+	<select id="findCountName" parameterType="String"
+		resultType="Integer">
+		select count(*) from dingdan where name = #{name} 
+	</select>
+
+	<select id="findOrderCount" parameterType="String"
+		resultType="Integer">
+		select count(*) from dingdan where orderid = #{orderid} 
+	</select>
+	
+	<select id="findOrderidCount" parameterType="String"
+		resultType="Integer">
+		select count(*) from dingdan where orderid like '%${orderid}%' 
+	</select>
+	
+	<select id="findOrderid" parameterType="String"
+		resultType="Order">
+		select * from dingdan where orderid like '%${orderid}%' 
+	</select>
+	
+	<select id="findTemp5" parameterType="String"
+		resultType="Order">
+		select * from dingdan where temp5 = #{temp5}
+	</select>
+	
+	<select id="findOrderstatus" parameterType="String"
+		resultType="Integer">
+		select count(*) from dingdan where status = #{status} 
+	</select>
+	
+	<select id="findStatusAndName" resultType="Order">
+		select * from dingdan where status = #{status} and temp3 = #{name} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findStatusAndNameAndTemp5" resultType="Order">
+		select * from dingdan where status = #{status} and temp3 = #{name} and temp5 = #{temp5}
+	</select>
+	
+	<select id="IfStatusAndName" resultType="Integer">
+		select count(*) from dingdan where status = #{status} and temp3 = #{name} 
+	</select>
+	
+	<select id="IfStatusAndNameAndTemp5" resultType="Integer">
+		select count(*) from dingdan where status = #{status} and temp3 = #{name} and temp5 = #{temp5}
+	</select>
+	
+	<select id="findStatusAndNameNoLimit" resultType="Order">
+		select * from dingdan where status = #{status} and temp3 = #{name} order by createtime desc,updatetime desc
+	</select>
+	
+	<select id="findStatus" resultType="Order">
+		select * from dingdan where status = #{status} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findLikeDate" parameterType="String" resultType="Order">
+		select * from dingdan where orderid like '%${orderid}%' and name = #{name} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findByGoodsanDate" resultType="Order">
+		select * from dingdan where goodsname = #{goodsname} and createtime like '%${createtime}%' order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findByPhone" resultType="Order">
+		select * from dingdan where phone = #{phone} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+
+	<select id="findByName" resultType="Order">
+		select * from dingdan where temp3 = #{name} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findByDate" resultType="Order">
+		select * from dingdan where createtime like '%${createtime}%' order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findLikeNameAndDate" resultType="Order">
+		select * from dingdan where name like '%${name}%' and createtime like '%${createtime}%' order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findLikeName" resultType="Order">
+		select * from dingdan where name like '%${name}%' order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="finddingdanById" resultType="Order">
+		select * from dingdan where id = #{id} order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+
+	<delete id="deleteByName" parameterType="String">
+		delete from dingdan where name = #{name}
+	</delete>
+
+	<delete id="deleteById" parameterType="String">
+		delete from dingdan where id = #{id}
+	</delete>
+	
+	<delete id="deleteByOrderid" parameterType="String">
+		delete from dingdan where orderid = #{orderid}
+	</delete>
+
+	<insert id="adddingdan" >
+		insert into
+		dingdan(id,orderid,name,goodsname,singleprice,goodsnum,sumprice,address,phone,zhushi,status,temp1,temp2,temp3,temp4,temp5,createtime)
+		values(uuid(),#{orderid},#{name},#{goodsname},#{singleprice},#{goodsnum},#{sumprice},#{address},#{phone},#{zhushi},#{status},#{temp1},#{temp2},#{temp3},#{temp4},#{temp5},#{createtime})
+	</insert>
+	
+	<update id="updatedingdanById" >
+		update dingdan set name = #{name},orderid = #{orderid},goodsname=#{goodsname},singleprice=#{singleprice},goodsnum=#{goodsnum},
+		sumprice=#{sumprice},address=#{address},phone=#{phone},zhushi=#{zhushi},status=#{status},
+		temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},updatetime=#{updatetime}
+		where id=#{id}
+	</update>
+	
+	<update id="updatedingdanByOrderId" >
+		update dingdan set name = #{name},goodsname=#{goodsname},singleprice=#{singleprice},goodsnum=#{goodsnum},
+		sumprice=#{sumprice},address=#{address},phone=#{phone},zhushi=#{zhushi},status=#{status},
+		temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},updatetime=#{updatetime}
+		where orderid = #{orderid}
+	</update>
+
+</mapper>

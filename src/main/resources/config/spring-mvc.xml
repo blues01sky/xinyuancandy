@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="  
+     http://www.springframework.org/schema/beans   
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+     http://www.springframework.org/schema/context  
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+     http://www.springframework.org/schema/mvc  
+     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd  
+     ">
+     
+      <!-- 配置文件上传的解析器 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+    <!-- 设置文件上传的最大尺寸 10MB  单位：B-->
+    <!-- 1KB=1024B  1M=1024KB -->
+        <property name="maxUploadSize" value="102410241024"></property>  
+    </bean>
+
+	<!-- <mvc:annotation-driven/> -->
+	
+	<!--如果用log4j的话就把这个注释和bean id打开-->
+	 <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager" /> 
+    <!-- 以.html为后缀名访问，默认返回数据类型是 text/html， 所以要修改返回的数据类型 -->
+   <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean"> 
+        <property name="mediaTypes">  
+            <map>  
+                <entry key="html" value="application/json;charset=UTF-8"/> 
+            </map>  
+        </property> 
+    </bean>
+    
+	<mvc:resources location="classpath:/static/" mapping="/static/" />
+
+	<!-- 启用spring mvc 注解 -->
+	<!-- <context:annotation-config /> -->
+
+	<!-- 设置使用注解的类所在的jar包 -->
+	<context:component-scan base-package="*.controller" />
+
+	<!-- 完成请求和注解POJO的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+
+	<!-- 对转向页面的路径解析。prefix：前缀， suffix：后缀 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
+		
+
+</beans>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration  
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径 -->
+	<typeAliases>
+		<typeAlias type="user.entity.User" alias="User" />
+		<typeAlias type="userlist.entity.Userlist" alias="Userlist" />
+		<typeAlias type="admin.entity.Admin" alias="Admin" />
+		<typeAlias type="order.entity.Order" alias="Order" />
+		<typeAlias type="setting.entity.Setting" alias="Setting" />
+		<typeAlias type="goods.entity.Goods" alias="Goods" />
+		<typeAlias type="xiaoshoue.entity.Xioashoue" alias="Xioashoue" />
+		<typeAlias type="liuyan.entity.Liuyan" alias="Liuyan" />
+	</typeAliases>
+	
+	<!-- <mappers> <mapper resource="cn.com.demo.mapper.PersonMapper.xml" /> 
+		</mappers> -->
+</configuration> 

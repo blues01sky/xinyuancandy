@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin.mapper.AdminMapper">
+	<select id="queryAll" resultType="Admin">
+		select * from admin order by createtime desc,updatetime desc limit #{startpage},#{count}
+	</select>
+	
+	<select id="findAdminNum" resultType="Integer">
+		select count(*) from admin
+	</select>
+	
+	<select id="IfNameExist" parameterType="String"
+		resultType="Integer">
+		select count(*) from admin where adminname = #{adminname}
+	</select>
+
+	<select id="findByAdminname" resultType="Admin">
+		select * from admin where adminname = #{adminname}
+	</select>
+
+	<select id="findAdminById" resultType="Admin">
+		select * from admin where id = #{id}
+	</select>
+
+	<delete id="deleteByAdminname" parameterType="String">
+		delete from admin where adminname = #{adminname}
+	</delete>
+
+	<delete id="deleteByAdminId" parameterType="Integer">
+		delete from admin where id = #{id}
+	</delete>
+
+	<insert id="addAdmin" >
+		insert into
+		admin(adminname,password,phone,address,temp1,temp2,temp3,temp4,temp5,createtime)
+		values(#{adminname},#{password},#{phone},#{address},#{temp1},#{temp2},#{temp3},#{temp4},#{temp5},#{createtime})
+	</insert>
+
+	<update id="updateAdminById" >
+		update admin set adminname = #{adminname},password=#{password},phone=#{phone},address=#{address},
+		temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},updatetime=#{updatetime}
+		where id = #{id}
+	</update>
+
+	<update id="updateAdminByUsername" >
+		update admin set password=#{password},phone=#{phone},address=#{address},
+		temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},updatetime=#{updatetime}
+		where adminname = #{adminname}
+	</update>
+
+</mapper>

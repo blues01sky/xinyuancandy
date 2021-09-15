@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userlist.mapper.UserlistMapper">
+
+	<select id="queryByAddress" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where remoteaddress =
+		#{remoteaddress} order by listid asc,createtime desc
+	</select>
+
+	<select id="queryByHost" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where remotehost = #{remotehost}
+		order by listid asc,createtime desc
+	</select>
+	
+	<select id="findLikeUserlistRemotehost" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where remotehost like '%${remotehost}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="findLikeUserlistlistid" parameterType="Integer"
+		resultType="Userlist">
+		select * from user_list where listid like '%${listid}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="findLikeUserlistusername" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where username like '%${username}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="findLikeUserlistremoteaddress" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where remoteaddress like '%${remoteaddress}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="findLikeUserlistserverport" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where serverport like '%${serverport}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="findLikeUserlistactives" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where actives like '%${actives}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="queryByactives" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where actives = #{actives} order by
+		listid asc,createtime desc
+	</select>
+
+	<select id="queryByUsername" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where username = #{username} order
+		by listid asc,createtime desc
+	</select>
+	
+	<select id="queryLimitListidByDesc" parameterType="Integer"
+		resultType="Userlist">
+		select * from user_list order by listid desc limit #{startpage},#{count}
+	</select>
+
+	<select id="queryByCreatetime" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where createtime like
+		'#{createtime}%' order by listid asc,createtime desc
+	</select>
+
+	<select id="findByListID" parameterType="Integer"
+		resultType="Userlist">
+		select * from user_list where listid = #{listid} order by
+		listid asc,createtime desc
+	</select>
+
+	<select id="findBySessionID" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where sessionid = #{sessionid}
+		order by listid asc,createtime desc
+	</select>
+
+	<select id="queryAllByListIDAsc" parameterType="String"
+		resultType="Userlist">
+		select * from user_list where username = #{username} order by
+		listid asc,createtime desc
+	</select>
+
+	<select id="findAllCount" resultType="Integer">
+		select count(*) from
+		user_list
+	</select>
+
+	<select id="CountCheck" resultType="Integer">
+		select count(*) from
+		user_list where createtime like '%${createtime}%' and actives like
+		'%${actives}%' and remoteaddress like '%${remoteaddress}%'
+	</select>
+
+	<delete id="delAll" >
+		delete from user_list
+	</delete>
+
+	<insert id="insertUserlist">
+		insert into
+		user_list(sessionid,listid,userid,username,remoteaddress,remotehost,serverport,actives,createtime,temp1,temp2)
+		values(uuid(),#{listid},#{userid},#{username},#{remoteaddress},#{remotehost},#{serverport},#{actives},#{createtime},#{temp1},#{temp2})
+	</insert>
+
+</mapper>

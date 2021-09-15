@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="setting.mapper.SettingMapper">
+	
+	<select id="IfNameExist" resultType="Integer">
+		select count(*) from setting where temp1 = {temp1}
+	</select>
+	
+	<select id="queryone" resultType="Setting">
+		select * from setting order by createtime desc limit 0,1
+	</select>
+	
+	<select id="queryall" resultType="Setting">
+		select * from setting order by createtime desc
+	</select>
+	
+	
+	<select id="findsetting">
+		select * from setting 
+	</select>
+
+	<select id="IfNameAndTypeExist" resultType="Integer">
+		select count(*) from setting where adminname= #{adminname} and 1 =1 and pagetype =#{pagetype}
+	</select>
+
+	<select id="findBynameAndPagetype" resultType="Setting">
+		select * from setting where adminname= #{adminname} and 1 =1 and pagetype =#{pagetype} order by updatetime desc,createtime desc limit #{startpage},#{count}
+	</select>
+
+	<select id="findSettingById" resultType="Setting">
+		select * from setting where id = #{id} limit 0,1
+	</select>
+
+	<select id="findByname" parameterType="String" resultType="Setting">
+		select * from setting where adminname= #{adminname}
+	</select>
+
+	<delete id="deleteByname">
+		delete from setting where adminname= #{adminname}
+	</delete>
+
+	<delete id="deleteBySettingId" >
+		delete from setting where id = #{id}
+	</delete>
+
+	<insert id="AddSetting">
+		insert into setting(id,adminname,pagetype,startpage,count,gonggao,footgoogao,footphone,footaddress,footemail,quicklinik,userquick,quickaddress,temp1,temp2,temp3,temp4,temp5,temp6,temp7,createtime)
+		values(uuid(),#{adminname},#{pagetype},#{startpage},#{count},#{gonggao},#{footgoogao},#{footphone},#{footaddress},#{footemail},#{quicklinik},#{userquick},#{quickaddress},#{temp1},#{temp2},#{temp3},#{temp4},#{temp5},#{temp6},#{temp7},#{createtime})
+	</insert>
+
+	<update id="updatesettingById">
+		update setting set adminname=#{adminname},pagetype=#{pagetype},startpage=#{startpage},count=#{count},gonggao=#{gonggao},footgoogao=#{footgoogao},footphone=#{footphone},footaddress=#{footaddress},footemail=#{footemail},quicklinik=#{quicklinik},userquick=#{userquick},quickaddress=#{quickaddress},temp1=#{temp1},temp2=#{temp2},temp3=#{temp3},temp4=#{temp4},temp5=#{temp5},temp6=#{temp6},temp7=#{temp7},updatetime=#{updatetime}
+		where id = #{id}
+	</update>
+
+</mapper>
